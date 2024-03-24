@@ -9,7 +9,10 @@ export const loginUser = async (req,res)  =>{
         const user = await USER.findOne({userName})
         if(user){
             const correctPassword = await bcrypt.compare(password,user.password)
-            if(correctPassword) return res.send("User Logged In")
+            if(correctPassword){
+                generateJwtTokenAndSetCookie(user._id,res)
+                return res.send("User Logged In")
+            } 
             else return res.send("Wrong Credentials")
     }else{
         res.send("User Doesn't Exist")
@@ -21,7 +24,12 @@ export const loginUser = async (req,res)  =>{
 }
 
 export const logoutUser = (req,res) =>{
-    res.send("Logout")
+    try {
+        res.cookie("jwt","",{maxAge:0})
+        res.send("Logged Out Successfully")
+    } catch (error) {
+        console.log(error.message);
+    }
 }
 
 export const signupUser = async (req,res) =>{
@@ -32,6 +40,9 @@ export const signupUser = async (req,res) =>{
         if(userExist){
             return res.send("User Already Exist")
         }
+
+        const userNameExist = await USER.findOne({userName})
+        if(userNameExist) return res.send("Username already in use")
 
         if(password!==cpassword){
             return res.send("Password doesn't match")
