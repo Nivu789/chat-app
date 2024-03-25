@@ -4,18 +4,18 @@ import generateJwtTokenAndSetCookie from "../utils/generateJwtToken.js"
 
 export const loginUser = async (req,res)  =>{
     try {
-        const {userName,password} = req.body
+        const {username,password} = req.body
 
-        const user = await USER.findOne({userName})
+        const user = await USER.findOne({userName:username})
         if(user){
             const correctPassword = await bcrypt.compare(password,user.password)
             if(correctPassword){
                 generateJwtTokenAndSetCookie(user._id,res)
-                return res.send("User Logged In")
+                return res.json({data:user._id})
             } 
-            else return res.send("Wrong Credentials")
+            else return res.json({error:"Wrong Credentials"})
     }else{
-        res.send("User Doesn't Exist")
+        res.json({error:"User Doesn't Exist"})
     }
     } catch (error) {
         console.log(error.message);
@@ -26,7 +26,7 @@ export const loginUser = async (req,res)  =>{
 export const logoutUser = (req,res) =>{
     try {
         res.cookie("jwt","",{maxAge:0})
-        res.send("Logged Out Successfully")
+        res.json({message:"Logged Out Successfully"})
     } catch (error) {
         console.log(error.message);
     }
@@ -34,27 +34,29 @@ export const logoutUser = (req,res) =>{
 
 export const signupUser = async (req,res) =>{
     try {
-        const {fullname,userName,email,password,cpassword,gender} = req.body
+        const {fullname,username,email,password,cpassword,gender} = req.body
+
+        console.log(req.body);
         
         const userExist = await USER.findOne({email:email})
         if(userExist){
-            return res.send("User Already Exist")
+            return res.json({message:"User Already Exist"})
         }
 
-        const userNameExist = await USER.findOne({userName})
-        if(userNameExist) return res.send("Username already in use")
+        const userNameExist = await USER.findOne({userName:username})
+        if(userNameExist) return res.json({message:"Username already in use"})
 
         if(password!==cpassword){
             return res.send("Password doesn't match")
         }
 
-        const boyProfileUrl = `https://avatar.iran.liara.run/public/boy?username=${userName}`
-        const girlProfileUrl = `https://avatar.iran.liara.run/public/girl?username=${userName}`
+        const boyProfileUrl = `https://avatar.iran.liara.run/public/boy?username=${username}`
+        const girlProfileUrl = `https://avatar.iran.liara.run/public/girl?username=${username}`
         const hashedPAssword = await bcrypt.hash(password,10)
 
         const user = new USER({
             fullname:fullname,
-            userName,userName,
+            userName:username,
             email:email,
             password:hashedPAssword,
             profilePic:gender=="male"?boyProfileUrl:girlProfileUrl
@@ -64,7 +66,7 @@ export const signupUser = async (req,res) =>{
         
         generateJwtTokenAndSetCookie(user._id,res)
         
-        res.send("User Created")
+        res.json({message:"User Created"})
 
     } catch (error) {
         console.log(error.message);

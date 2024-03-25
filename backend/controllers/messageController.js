@@ -1,5 +1,7 @@
 import Conversation from "../models/converstationModel.js"
 import Message from "../models/messageModel.js"
+import generateJwtTokenAndSetCookie from "../utils/generateJwtToken.js"
+
 
 export const sendMessage = async(req,res) =>{
     try {
@@ -42,7 +44,6 @@ export const getMessage = async(req,res) =>{
     try {
         const {id:userToChat} = req.params
         const senderId = req.user._id
-
         const messages = await Conversation.findOne({
             participants:{$all:[senderId,userToChat]}
         }).populate("messages")
