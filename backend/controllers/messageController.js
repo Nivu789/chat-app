@@ -33,7 +33,7 @@ export const sendMessage = async(req,res) =>{
         }
 
         await conversation.save()
-        res.send("message was send")
+        res.json({message:message})
 
     } catch (error) {
         console.log(error.message);
@@ -42,12 +42,16 @@ export const sendMessage = async(req,res) =>{
 
 export const getMessage = async(req,res) =>{
     try {
+        console.log("Working")
         const {id:userToChat} = req.params
         const senderId = req.user._id
+        console.log("User TO send",userToChat)
+        console.log("sender ID",senderId)
         const messages = await Conversation.findOne({
             participants:{$all:[senderId,userToChat]}
         }).populate("messages")
 
+        console.log("Message:",messages)
         if(!messages) return res.json([])
         res.json({messages})
         

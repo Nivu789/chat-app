@@ -1,14 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Message from './Message'
+import useGetMessage from '../../hooks/useGetMessage'
+
 
 const Messages = () => {
+
+  const {messages} = useGetMessage()
+
+  console.log("Messages",messages)
+
   return (
     <div className='px-1 flex-1 overflow-auto'>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
-        <Message/>
+       
+        {messages? messages.map((message,index)=>{
+          return <Message key={index} message={message}/>
+        })
+      :
+      null
+      }
+     
     </div>
   )
 }
