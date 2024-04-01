@@ -40,7 +40,7 @@ const Login = () => {
         
         
         
-        <Link to={'/signup'}>New Here - Login</Link>
+        <Link to={'/signup'}>New Here - Signup</Link>
     </div>
   )
 }

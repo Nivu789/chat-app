@@ -1,17 +1,29 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Messages from './Messages'
 import MessageInput from './MessageInput'
 import { TiMessages } from "react-icons/ti";
 import useConversation from '../../zustand/useConversation';
+import useGetMessage from '../../hooks/useGetMessage';
 
 const MessageContainer = () => {
   const {selectedConversation,setSelectedConversation} = useConversation();
+  const messagesContainerRef = useRef(null)
+  const { messages } = useGetMessage()
 
   useEffect(()=>{
-    return () =>{
-      setSelectedConversation(null)
-    }
-  },[])
+
+    if (messagesContainerRef.current) {
+        // Scroll to the bottom of the messages container when messages change
+        messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+      }
+    },[messages])
+    
+    useEffect(()=>{
+      return () =>{
+        setSelectedConversation(null)
+      }
+    },[])
+    
   return (
 
     <div className='md:min-w-[450px] flex flex-col'>
@@ -25,7 +37,9 @@ const MessageContainer = () => {
             <a className="btn btn-ghost text-xl">{selectedConversation.userName}</a>
              </div>
 
-             <Messages/>
+             <div ref={messagesContainerRef} className="overflow-auto flex-1">
+            <Messages />
+            </div>
             <MessageInput/>
             </>
             

@@ -1,17 +1,45 @@
 import React from 'react'
+import { useAuthContext } from '../../contexts/AuthContext'
+import useConversation from '../../zustand/useConversation'
 
 const Message = ({message}) => {
+
+  const {authUser} = useAuthContext()
+  const {selectedConversation} = useConversation()
+  const sendUser = message.senderId === authUser._id
   return (
-    <div className='chat chat-end'>
-        <div className='chat-image avatar'>
-            <div className='w-10 rounded-full'>
-                <img src={"https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngegg.com%2Fen%2Fsearch%3Fq%3Davatars&psig=AOvVaw2JOLyVX0CzKHr3o3YsUk5M&ust=1711386116043000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCKiF4p6wjYUDFQAAAAAdAAAAABAJ"} alt="sender" />
-            </div>
-        </div>
-        
-        <div className="chat-bubble">{message.message}</div>
-        <div className="chat-footer opacity-50 text-end">12:46</div>
-       
+    <div>
+      {sendUser?
+      <div className="chat chat-start flex gap-5 my-2 items-center mx-1">
+    <div className="chat-image avatar">
+      <div className="w-10 rounded-lg">
+        <img alt="Tailwind CSS chat bubble component" src={authUser.profilePic} />
+      </div>
+    </div>
+    <div className='flex flex-col justify-start text-left'>
+    <div className="chat-header text-sm">
+    {authUser.userName}
+    
+  </div>
+    <div className="chat-bubble bg-blue-300 rounded-xl p-2 text-white">{message.message}</div>
+    </div>
+    
+  </div>
+:
+<div className="chat chat-start flex gap-5 my-2 mx-1 items-center">
+    <div className="chat-image avatar">
+      <div className="w-10 rounded-lg">
+        <img alt="Tailwind CSS chat bubble component" src={selectedConversation.profilePic} />
+      </div>
+    </div>
+    <div className='flex flex-col justify-start text-left'>
+    <div className="chat-header text-sm">
+    {selectedConversation.userName}
+    
+  </div>
+    <div className="chat-bubble bg-slate-500 rounded-xl p-2 text-white">{message.message}</div>
+    </div>
+  </div>}
     </div>
   )
 }

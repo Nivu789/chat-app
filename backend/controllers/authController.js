@@ -11,7 +11,7 @@ export const loginUser = async (req,res)  =>{
             const correctPassword = await bcrypt.compare(password,user.password)
             if(correctPassword){
                 generateJwtTokenAndSetCookie(user._id,res)
-                return res.json({data:user._id})
+                return res.send({user:user})
             } 
             else return res.json({error:"Wrong Credentials"})
     }else{
