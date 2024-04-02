@@ -8,13 +8,16 @@ const Messages = () => {
   const {messages} = useGetMessage()
 
   console.log("Messages",messages)
+  
 
   return (
     <div className='px-1 flex-1 overflow-auto'>
        
-        {messages? messages.map((message,index)=>{
-          return <Message key={index} message={message}/>
-        })
+        {messages? messages.map((message,index) => (
+					<div key={index}>
+						<Message message={message} />
+					</div>
+				))
       :
       null
       }

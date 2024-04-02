@@ -33,7 +33,7 @@ export const sendMessage = async(req,res) =>{
         }
 
         await conversation.save()
-        res.json({message:message})
+        res.json({senderId:senderId,message:message})
 
     } catch (error) {
         console.log(error.message);

@@ -5,7 +5,7 @@ import useSendMessage from '../../hooks/useSendMessage';
 const MessageInput = () => {
 
   const [message,setMessage] = useState('')
-  const {sendMessage} = useSendMessage()
+  const {sendMessage,notifyMessageSent} = useSendMessage()
 
 
   async function handleSendMessage(e){

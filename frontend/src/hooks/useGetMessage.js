@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import useConversation from '../zustand/useConversation'
+import toast from 'react-hot-toast'
 
 
 const useGetMessage = () => {
@@ -18,7 +19,7 @@ const useGetMessage = () => {
         setMessages([])
       }  
       } catch (error) {
-        // toast.error(error.message)
+        toast.error(error.message)
       }
     }
     if(selectedConversation?._id) getMessage();
