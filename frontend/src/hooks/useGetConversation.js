@@ -24,7 +24,7 @@ const useGetConversation = () => {
         getConversation()
     },[])
 
-    return {conversation}
+    return {conversation,setConversation}
 }
 
 export default useGetConversation
