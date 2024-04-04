@@ -5,6 +5,7 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthContextProvider } from './contexts/AuthContext';
+import { SocketContextProvider } from './contexts/SocketContext';
 
 
 
@@ -15,7 +16,9 @@ root.render(
     <Toaster/>
     
     <AuthContextProvider>
-    <App />
+      <SocketContextProvider>
+      <App />
+      </SocketContextProvider>
     </AuthContextProvider>
     
     </BrowserRouter>

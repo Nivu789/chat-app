@@ -4,7 +4,7 @@ export const getUserForSidebar = async(req,res)=>{
     try {
         const onlineUser = req.user._id
         const allOtherUser = await USER.find({_id:{$ne:onlineUser}}).select("-password")
-        console.log(allOtherUser)
+        
         res.json({users:allOtherUser})
     } catch (error) {
         console.log(error.message);

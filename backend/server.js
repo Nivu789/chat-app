@@ -1,7 +1,7 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors'
-const app = express();
+import {app, server} from './socket/socket.js'
 
 import authRoute from './routes/authRoute.js'
 import messageRoute from './routes/messageRoute.js'
@@ -27,7 +27,7 @@ app.get('/',(req,res)=>{
 })
 
 
-app.listen(PORT,async()=>{
+server.listen(PORT,async()=>{
     await connectToDatabase()
     console.log(`Server listening on port ${PORT}`);
 })

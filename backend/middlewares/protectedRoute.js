@@ -5,7 +5,7 @@ const protectedRoute = async(req,res,next) =>{
 
     try {
         const token = req.cookies.jwt
-        console.log(token);
+        
         if(!token) return res.status(401).json({error:"Unauthorised Access - No Token"})
     
         const decoded = jwt.verify(token,process.env.JWT_SECRET)
@@ -18,7 +18,6 @@ const protectedRoute = async(req,res,next) =>{
     
         req.user = user
 
-        console.log("user:",req.user);
         next() 
     } catch (error) {
         console.log("Error in Middleware protected",error.message);
