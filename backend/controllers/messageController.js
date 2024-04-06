@@ -1,5 +1,6 @@
 import Conversation from "../models/converstationModel.js"
 import Message from "../models/messageModel.js"
+import { getRecieverSocketId, io } from "../socket/socket.js"
 import generateJwtTokenAndSetCookie from "../utils/generateJwtToken.js"
 
 
@@ -34,6 +35,12 @@ export const sendMessage = async(req,res) =>{
 
         await conversation.save()
         res.json({senderId:senderId,message:message})
+
+        const recieverSocketId = getRecieverSocketId(receiverId)
+
+        if(recieverSocketId){
+            io.to(recieverSocketId).emit("newMessage",newMessage)
+        }
 
     } catch (error) {
         console.log(error.message);

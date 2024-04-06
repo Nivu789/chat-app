@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import Message from './Message'
 import useGetMessage from '../../hooks/useGetMessage'
+import useListenMessages from '../../hooks/useListenMessages'
 
 
 const Messages = () => {
@@ -9,6 +10,7 @@ const Messages = () => {
 
   console.log("Messages",messages)
   
+  useListenMessages();
 
   return (
     <div className='px-1 flex-1 overflow-auto'>
