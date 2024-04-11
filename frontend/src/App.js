@@ -9,7 +9,7 @@ import { useAuthContext } from './contexts/AuthContext';
 function App() {
   const {authUser} = useAuthContext();
   return (
-    <div className="App flex justify-center h-screen">
+    <div className="App flex justify-center h-screen items-center">
       
       <Routes>
       

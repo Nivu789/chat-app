@@ -10,7 +10,7 @@ const Conversations = () => {
 
 
   return (
-    <div className='py-4 flex flex-col overflow-auto'>
+    <div className='py-4 flex flex-col overflow-auto w-80'>
         
         {conversation && conversation.length > 0 ? conversation.map((item,index)=>{
           console.log(item)

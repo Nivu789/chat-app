@@ -11,11 +11,12 @@ const Message = ({message}) => {
   const profilePic = sendUser ? authUser.profilePic : selectedConversation?.profilePic
   const chatBubbleColor = sendUser ? "bg-blue-300" : "bg-green-500"
   const chatUserName = sendUser ? authUser.userName : selectedConversation.userName
+  const shake = message.shouldShake ? "shake" : "";
   
   return (
-      <div className="chat chat-start flex gap-5 my-2 items-center mx-1">
+      <div className={`chat chat-start flex gap-5 my-2 items-center mx-1 ${shake}`}>
     <div className="chat-image avatar">
-      <div className="w-10 rounded-lg">
+      <div className={`w-10 rounded-lg`}>
         <img alt="Tailwind CSS chat bubble component" src={profilePic} />
       </div>
     </div>

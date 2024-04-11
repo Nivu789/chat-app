@@ -35,7 +35,7 @@ const MessageContainer = () => {
             :
 
             <>
-            <div className="navbar bg-base-100">
+            <div className="navbar bg-white p-1 text-black">
             <a className="btn btn-ghost text-xl">{selectedConversation.userName}</a>
              </div>
 
