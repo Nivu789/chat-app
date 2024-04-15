@@ -1,6 +1,7 @@
 import React from 'react'
 import useConversation from '../../zustand/useConversation'
 import { useSocketContext } from '../../contexts/SocketContext';
+import { RiWifiOffLine } from "react-icons/ri";
 
 const Conversation = ({data}) => {
 
@@ -19,10 +20,11 @@ const Conversation = ({data}) => {
         <div className='flex gap-3 justify-between'>
             <p className='font-bold text-gray-200'>{data.userName}</p>
         </div>
-        {isOnline ? <div className='rounded-full bg-green-600 w-fit p-2 text-white'>online</div> : <div className='rounded-full bg-gray-600 w-fit p-2 text-white'>Away</div>}
+        
         </div>
         
-        <div>
+        <div className='flex items-center gap-2'>
+        {isOnline ? <div className='rounded-full bg-green-600 w-3 h-3'></div> : <RiWifiOffLine />}
             <div className='w-12 rounded-full'>
                 <img src={data.profilePic} alt="user avatar" />
             </div>
